@@ -116,32 +116,3 @@ fun rememberMapLifecycleObserver(
         }
     }
 }
-
-
-@Composable
-private fun VideoPlayer(
-) {
-    val context = LocalContext.current
-    val exoPlayer = remember {
-        SimpleExoPlayer.Builder(context).build().apply {
-            val dataSourceFactory = DefaultDataSourceFactory(context, Util.getUserAgent(
-                context, context.packageName
-            ))
-
-            val source = ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(
-                    MediaItem.fromUri(Uri.parse("https://dl.rozmusic.com/Music%20Video/1399/01/05/Aron%20Afshar%20-%20Shabe%20Royaei%20480p_RozMusic.mp4"))
-                )
-            setMediaSource(source)
-            prepare()
-            playWhenReady = true
-        }
-    }
-
-    AndroidView(
-        factory = {
-            PlayerView(it).apply {
-                player = exoPlayer
-            }
-        })
-}
